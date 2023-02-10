@@ -22,11 +22,11 @@ for(var i = 0; i < enemyNames.length; i++) {
 };
 
 
-// for (var i = 0; i < enemyNames.length; i++) {
-//     debugger;
-//     // call fight function with enemy-robot
-//     fight(enemyNames[i]);
-// }
+for (var i = 0; i < enemyNames.length; i++) {
+    debugger;
+    // call fight function with enemy-robot
+    fight(enemyNames[i]);
+}
 
 var fight = function(enemyName) {
     // Alert players that they are starting the round
