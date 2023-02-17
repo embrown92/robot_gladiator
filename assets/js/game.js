@@ -28,12 +28,12 @@ var enemyAttack = 12;
 // }
 
 // fight function (now with parameter for enemy's name)
-var fight = function(enemyName) {
+var fight = function (enemyName) {
     // repeat and execute as long as the enemy-robot is alive
-    while(playerHealth > 0 && enemyHealth > 0 ) {
+    while (playerHealth > 0 && enemyHealth > 0) {
         // Ask to see if player wants to fight or skip
         var promptFight = window.prompt("Would you like to Fight or Skip this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        
+
         // if player picks "skip" confirm and then stop the loop
         if (promptFight === "skip" || promptFight === "SKIP") {
             // confirm player wants to skip
@@ -52,9 +52,9 @@ var fight = function(enemyName) {
         // subtract the value of 'playerAttack' from the value of 'enemyHealth'
         // and use that result to updte the value in the 'enemyHealth' variable
         enemyHealth = enemyHealth - playerAttack;
-         // Log a resulting message to the console so we know that it worked.
+        // Log a resulting message to the console so we know that it worked.
         console.log(
-            playerName + " attacked " + enemyName + ". " 
+            playerName + " attacked " + enemyName + ". "
             + enemyName + " now has " + enemyHealth + " health remaining."
         );
 
@@ -65,18 +65,18 @@ var fight = function(enemyName) {
 
             // award player money for winning
             playerMoney = playerMoney + 20;
-                
+
             // leave while() loop since enemy is dead
             break;
         } else {
-            window.alert(enemyName + " still has " + enemyHealth + " health left." );
+            window.alert(enemyName + " still has " + enemyHealth + " health left.");
         }
 
         // Subtract the value of 'enemyAttack' from the value of 'playerHealth'
         // and use that result to update the value in the 'playerHealth' variable
         playerHealth = playerHealth - enemyAttack;
         // Log a resulting message to the console so we know that it worked.
-        console.log(    
+        console.log(
             enemyName + " attacked " + playerName + ". " + playerName + " now has "
             + playerHealth + " health remaining."
         );
@@ -94,7 +94,7 @@ var fight = function(enemyName) {
 }; // end of fight function
 
 //function to start a new game
-var startGame = function() {
+var startGame = function () {
 
     // reset player stats
     playerHealth = 100;
@@ -103,14 +103,14 @@ var startGame = function() {
 
 
     // fight each enemy-robot by looping over them and fighting them one at a time
-    for(var i = 0; i < enemyNames.length; i++) {
+    for (var i = 0; i < enemyNames.length; i++) {
+
         // if player is still alive, keep fighting
-        
         //debugger;
         if (playerHealth > 0) {
             // let layer know what round they are in, remember that arrays start
             // at 0 so it needs to have 1 added to it 
-            window.alert("Welcome to Robot Gladiators! Round " + (i + 1) );
+            window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
 
             // pick new enemy to fight based on the index of the enemyNames array
             var pickedEnemyName = enemyNames[i];
@@ -126,21 +126,30 @@ var startGame = function() {
             // where it will assume the value of the enemyName parameter
             fight(pickedEnemyName);
 
+            // if player is till alive and we're not at the last enemy in the array
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                // ask if player wants to use the store before moving onto the next round
+                var storeConfirm = window.confirm("The fight is over, want to visit the store before the next round?");
+
+                // if yes, take them to the store() function
+                if (storeConfirm) {
+                    shop();
+                }
+            }
+        }
         // if player isn't alive, stop the game
-        } else {
+        else {
             window.alert("You have lost your robot in the battle! GAME OVER!");
             break;
         }
     }
-
     // after the loop ends, player is either out of health or 
     // enemies to fight, so run the endGame function
     endGame();
 }; // end of start game function
 
-
 //function to end the entire game
-var endGame = function() {
+var endGame = function () {
     window.alert("The game has now ended. Let's see how you did!");
 
     // if player is still alive, player wins!
@@ -154,13 +163,69 @@ var endGame = function() {
     var playAgainConfirm = window.confirm("Would you like to play again?");
 
     if (playAgainConfirm) {
-        //restart the game
+        //if yes, restart the game
         startGame();
     } else {
+        //if no, end game
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
 }; // end of endGame function
 
+// function to enter the shop between battles
+var shop = function () {
+    // ask player what they'd like to do
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE' or 'LEAVE' to make a choice. "
+    );
+
+    // use switch case to carry out action
+    switch (shopOptionPrompt) {
+
+        // if player picks refill and has money, add 20 to playerHealth and subtract 7 from playerMoney
+        case "REFILL":
+        case "refill":
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                // increase health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            } else {
+                window.alert("You don't have enough money!");
+            }
+            break;
+
+        // if player picks UPGRADE and has money, add 6 to playerAttack and subtract 7 from playerMoney
+        case "UPGRADE":
+        case "upgrade":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                // increase attack and decrease money
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            } else {
+                window.alert("You don't have enough money!");
+            }
+            break;
+
+        // if player picks LEAVE, exit the store
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+
+            // do nothing, so function will end
+            break;
+
+        // if player did not pick a valid option, ask them to try again
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+
+            // call shop() again to force player to pick a valid option
+            shop();
+            break;
+    }
+}; // end of shop function
 
 
 // start the game when the page loads

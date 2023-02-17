@@ -5,13 +5,14 @@ GAME States
 "LOSE" - Player robot's health is zero or less
 
 
+GAME SEQUENCE
 The following sequence shows our take on pseudocoding the "fight" function
 
 ***Add while lope to repeat and execute as long as the enemy-robot is alive
     **Ask to see if the player wants to fight or skip
         *If player picks "skip" confirm and then stop the loop
-        -confirm player wants to skip
-        -if yes(true), leave fight
+            -confirm player wants to skip
+            -if yes(true), leave fight
 
         (When Player Attacks)
         *subtract the value of 'playerAttack' from the value of 'enemyHealth'
@@ -22,42 +23,94 @@ The following sequence shows our take on pseudocoding the "fight" function
         *check enemy's health
         
         *if the enemy-robot's health is zero or less, exit from the fight loop
-        -award player money for winning
-        -leave while() loop since enemy is dead
+            -award player money for winning
+            -leave while() loop since enemy is dead
 
         (When Enemy Attacks)
         *subtract the value of 'enemyAttack' from the value of 'playerHealth'
         and use that result to update the value in the 'enemyHealth' variable
 
-        *Lof a resulting message to the console so we know that it worked
+        *log a resulting message to the console so we know that it worked
 
         *check player's health
 
         *if player-robot's health is zero or less, exit from the fight loop
-        - leave while() loop if player is dead
+            - leave while() loop if player is dead
+
+    ** end while loop
+*** end fight function
 
 
 FUNCTION TO START A NEW GAME
 
-*** fight each enemy-robot by looping over them and fighting them one at a time
+**** fight each enemy-robot by looping over them and fighting them one at a time
 
-    **if player is still alive, keep fighting
+    *** reset player stats
 
-        *let player know what round they are in, remember that arrays
-        starts at 0 so it needs to have 1 added to it
+        **if player is still alive, keep fighting
 
-        *pick new enemy to fight based on the index of the enemyNames array
+            *let player know what round they are in, remember that arrays
+            starts at 0 so it needs to have 1 added to it
 
-        *reset enemyHealth before starting a new fight
+            *pick new enemy to fight based on the index of the enemyNames array
 
-        *use debugger to pause script from running and check what's going
-        on at that moment in the code
+            *reset enemyHealth before starting a new fight
 
-        *pass the pickedEnemyName variable's value into the fight function
-        where it will assume the value of the enemyName parameter
+            *use debugger to pause script from running and check what's going
+            on at that moment in the code
 
-    **if player isn't alive, stop the game
+            *pass the pickedEnemyName variable's value into the fight function
+            where it will assume the value of the enemyName parameter
 
+            *if player is still alive and we're not at the last enemy in the array
+                -ask if player wants to use the store before moving onto the next round
+                -if yes, take them to the store() function
+
+        **if player isn't alive, stop the game
+
+    ***after the loop ends, player is either out of health or 
+    enemies to fight, so run the endGame function
+**** end of startGame() function
+
+FUNCTION TO END GAME
+**function to end entire game
+
+    *if player is still alive, player wins!
+
+    *ask player if they'd like to play again
+
+        -if yes, restart the game
+
+        -if no, end game
+
+** end of the endGame() function
+
+SHOP FUNCTION
+***create funtion to enter the shop between battles
+
+    **ask player what they would like to do: refill, upgrade or leave
+
+    **use switch case to carry out action
+
+        *if player picks refill and has money, add 20 to playerHealth and subtract 7 from playerMoney
+            -increase health and decrease money
+
+        *if player picks UPGRADE and has money, add 6 to playerAttack and subtract 7 from playerMoney
+            -increasse health and decrease money
+
+        *if player picks leave, exit the store
+            -do nothing, so function will end
+
+        *if player did not pick a valid option, ask them to try again
+            -call shop() again to force player to pick a valid option
+
+*** end of shop function
+
+* start the game when the page loads
+
+----------------------------------------------------------------------------------------------------------------------
+
+GAME PSEUDOCODE
 
 
 The following sequence shows our take on 
