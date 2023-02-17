@@ -1,0 +1,81 @@
+GAME States
+"WIN" - player robot has defeated all enemy-robots
+    * fight all enemy-robtos
+    * defeat each enemy-robot
+"LOSE" - Player robot's health is zero or less
+
+
+The following sequence shows our take on pseudocoding the "fight" function
+
+***Add while lope to repeat and execute as long as the enemy-robot is alive
+    **Ask to see if the player wants to fight or skip
+        *If player picks "skip" confirm and then stop the loop
+        -confirm player wants to skip
+        -if yes(true), leave fight
+
+        (When Player Attacks)
+        *subtract the value of 'playerAttack' from the value of 'enemyHealth'
+        and use that result to update the value in the 'enemyHealth' variable
+
+        *log resulting message to the console so we know that it worked
+
+        *check enemy's health
+        
+        *if the enemy-robot's health is zero or less, exit from the fight loop
+        -award player money for winning
+        -leave while() loop since enemy is dead
+
+        (When Enemy Attacks)
+        *subtract the value of 'enemyAttack' from the value of 'playerHealth'
+        and use that result to update the value in the 'enemyHealth' variable
+
+        *Lof a resulting message to the console so we know that it worked
+
+        *check player's health
+
+        *if player-robot's health is zero or less, exit from the fight loop
+        - leave while() loop if player is dead
+
+
+FUNCTION TO START A NEW GAME
+
+*** fight each enemy-robot by looping over them and fighting them one at a time
+
+    **if player is still alive, keep fighting
+
+        *let player know what round they are in, remember that arrays
+        starts at 0 so it needs to have 1 added to it
+
+        *pick new enemy to fight based on the index of the enemyNames array
+
+        *reset enemyHealth before starting a new fight
+
+        *use debugger to pause script from running and check what's going
+        on at that moment in the code
+
+        *pass the pickedEnemyName variable's value into the fight function
+        where it will assume the value of the enemyName parameter
+
+    **if player isn't alive, stop the game
+
+
+
+The following sequence shows our take on 
+pseudocoding the "play again" and "shop" features:
+
+*Wrap the game logic in a startGame() function
+
+*When the player is defeated or there are no more enemies, call an endGame() function that:
+-Alerts the player's total stats
+-Asks the player if they want to play again
+-If yes, call startGame() to restart the game
+
+*After the player skips or defeats an enemy (and there are still more robots to fight):
+-Ask the player if they want to "shop"
+-If no, continue as normal
+-If yes, call the shop() function
+-In the shop() function, ask player if they want to "refill" health, "upgrade" attack, or "leave" the shop
+-If refill, subtract money points from player and increase health
+-If upgrade, subtract money points from player and increase attack power
+-If leave, alert goodbye and exit the function
+-If any other invalid option, call shop() again
