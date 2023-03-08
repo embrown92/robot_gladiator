@@ -27,6 +27,13 @@ var enemyAttack = 12;
 //     fight(enemyNames[i]);
 // }
 
+// function to generate a random numeric value
+var randomNumber = function (min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
 // fight function (now with parameter for enemy's name)
 var fight = function (enemyName) {
     // repeat and execute as long as the enemy-robot is alive
@@ -43,7 +50,8 @@ var fight = function (enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + "has decided to skip this fight. Goodbye!")
                 // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                // use Math.max(0, varaibleName) to ensure that deducted values always stop at zero
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney)
                 break;
             }
@@ -51,7 +59,14 @@ var fight = function (enemyName) {
 
         // subtract the value of 'playerAttack' from the value of 'enemyHealth'
         // and use that result to updte the value in the 'enemyHealth' variable
-        enemyHealth = enemyHealth - playerAttack;
+        // use Math.max(0, varaibleName) to ensure that deducted values always stop at zero
+        // enemyHealth = Math.max(0, enemyHealth - playerAttack);
+
+        // generate random damage value based on player's attack power
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+
+        enemyHealth = Math.max(0, enemyHealth - damage);
+
         // Log a resulting message to the console so we know that it worked.
         console.log(
             playerName + " attacked " + enemyName + ". "
@@ -74,7 +89,14 @@ var fight = function (enemyName) {
 
         // Subtract the value of 'enemyAttack' from the value of 'playerHealth'
         // and use that result to update the value in the 'playerHealth' variable
-        playerHealth = playerHealth - enemyAttack;
+        // use Math.max(0, varaibleName) to ensure that deducted values always stop at zero
+        // playerHealth = Math.max(0, playerHealth - enemyAttack);
+
+        // generate random damage value based on enemy's attack power
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+        playerHealth = Math.max(0, playerHealth - damage);
+
         // Log a resulting message to the console so we know that it worked.
         console.log(
             enemyName + " attacked " + playerName + ". " + playerName + " now has "
@@ -116,7 +138,11 @@ var startGame = function () {
             var pickedEnemyName = enemyNames[i];
 
             // reset enemyHealth before starting new fight
-            enemyHealth = 50;
+            // use Math.random() to get a random number but never 1 or 21
+            // use Math.floor to round up each random number to the nearest whole number
+            // we are adding 40 to ensure that enemyHealth is always at or above 40
+            // enemyHealth = Math.floor(Math.random() * 21) + 40;
+            enemyHealth = randomNumber(40, 60);
 
             // use debugger to pause script from running and check 
             // what's going on at that moment in the code
@@ -226,7 +252,6 @@ var shop = function () {
             break;
     }
 }; // end of shop function
-
 
 // start the game when the page loads
 startGame();
