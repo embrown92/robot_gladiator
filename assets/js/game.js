@@ -16,9 +16,20 @@ var randomNumber = function (min, max) {
 // var playerAttack = 10;
 // var playerMoney = 10;
 
-// player info
+// function to set name
+var getPlayerName = function () {
+    var name = "";
+
+    // not accept invalid data, such as blank or null
+    // prompt the player until a valid date is received
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+    }
+}
+
+// player info / variables
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -81,6 +92,7 @@ var enemyInfo = [
 //     // call fight function with enemy-robot
 //     fight(enemyNames[i]);
 // }
+
 
 // fight function (now with parameter for enemy's name)
 var fight = function (enemy) {
@@ -184,6 +196,8 @@ var startGame = function () {
             // let layer know what round they are in, remember that arrays start
             // at 0 so it needs to have 1 added to it 
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+
+            // debugger;
 
             // pick new enemy to fight based on the index of the enemyNames array
             var pickedEnemyObj = enemyInfo[i];
